@@ -1,0 +1,63 @@
+name: Build & publish pages branch
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1 — Checkout the source (with history so we can push)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2 — Set up Node
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3 — Install & build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build project
+        run: npm run build   # output to `dist/`
+
+      # 4 — Prepare a clean pages branch
+      - name: Create fresh pages branch
+        run: |
+          # Save build output outside the repo for a moment
+          mv dist ../dist
+
+          # Delete existing branch on origin (if it exists)
+          git fetch origin
+          if git show-ref --quiet refs/heads/pages; then
+            git push origin --delete pages
+          fi
+
+          # Start an orphan branch named pages
+          git checkout --orphan pages
+
+          # Remove everything tracked in the working tree
+          git rm -rf .
+
+          # Bring build output back and stage it
+          mv ../dist/* .
+          rm -rf ../dist
+          git add .
+
+          # Make a commit
+          git -c user.name="github-actions[bot]" \
+              -c user.email="github-actions[bot]@users.noreply.github.com" \
+              commit -m "Deploy build for ${{ github.sha }}"
+
+      # 5 — Force-push it
+      - name: Push pages branch
+        run: git push --force origin pages
