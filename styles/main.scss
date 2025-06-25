@@ -836,3 +836,77 @@ body {
     transform: rotate(360deg);
   }
 }
+
+// Upload Area Styles
+.upload-area {
+  border: 2px dashed color(secondary-lighter);
+  border-radius: radius(md);
+  padding: spacing(2xl);
+  text-align: center;
+  transition: all transition(normal) ease;
+  cursor: pointer;
+  background-color: #f9fafb;
+
+  &:hover {
+    border-color: color(primary);
+    background-color: color(primary-lighter);
+
+    .upload-icon {
+      color: color(primary);
+    }
+  }
+
+  &.dragover {
+    border-color: color(primary);
+    background-color: color(primary-lighter);
+    transform: scale(1.02);
+  }
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: color(secondary);
+  margin-bottom: spacing(lg);
+}
+
+.upload-text {
+  h5 {
+    color: color(text-muted);
+    margin-bottom: spacing(sm);
+  }
+}
+
+.upload-link {
+  color: color(primary);
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: color(primary-dark);
+  }
+}
+
+.upload-input {
+  display: none;
+}
+
+.upload-progress {
+  .progress {
+    height: 8px;
+  }
+}
+
+.uploaded-file {
+  animation: slideIn transition(normal) ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

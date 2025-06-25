@@ -48,6 +48,10 @@
                 <i class="fas fa-edit"></i>
                 <span>Edit Template</span>
             </a>
+            <a href="#" class="nav-item" data-page="input-fields">
+                <i class="fas fa-keyboard"></i>
+                <span>Input Fields</span>
+            </a>
             <a href="#" class="nav-item" data-page="settings">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
@@ -506,6 +510,136 @@
                 </div>
             </div>
 
+            <!-- Input Fields Page -->
+            <div id="input-fields-page" class="page">
+                <div class="page-header">
+                    <h1>Input Fields</h1>
+                    <p>Showcase of different input field types and usage examples.</p>
+                </div>
+
+                <!-- Template Name Input Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row align-items-end">
+                            <div class="col-lg-9 col-md-8">
+                                <label for="templateNameDemo" class="form-label">Template Name</label>
+                                <input type="text" class="form-control" id="templateNameDemo" placeholder="Enter template name">
+                            </div>
+                            <div class="col-lg-3 col-md-4">
+                                <button id="saveTemplateDemo" class="btn btn-primary w-100 mt-3 mt-md-0">
+                                    <i class="fas fa-save"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template Upload Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <label class="form-label">Template Upload</label>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <h5>Drop your template file here</h5>
+                                    <p class="text-muted">or <span class="upload-link">browse files</span></p>
+                                    <small class="text-muted">Supports: .json, .xml, .txt files up to 10MB</small>
+                                </div>
+                            </div>
+                            <input type="file" id="templateFileInput" class="upload-input" accept=".json,.xml,.txt" hidden>
+                        </div>
+                        
+                        <!-- Upload Progress (hidden by default) -->
+                        <div class="upload-progress mt-3" id="uploadProgress" style="display: none;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="upload-filename"></span>
+                                <span class="upload-percentage">0%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Uploaded File Info (hidden by default) -->
+                        <div class="uploaded-file mt-3" id="uploadedFile" style="display: none;">
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-file-alt text-primary me-3"></i>
+                                    <div>
+                                        <div class="fw-medium uploaded-filename"></div>
+                                        <small class="text-muted uploaded-filesize"></small>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-danger" id="removeFile">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <label class="form-label mb-3">Address Information</label>
+                        
+                        <div class="row">
+                            <!-- Street Address -->
+                            <div class="col-12 mb-3">
+                                <label for="street" class="form-label">Street Address</label>
+                                <input type="text" class="form-control" id="street" placeholder="Enter street address">
+                            </div>
+                            
+                            <!-- City and State -->
+                            <div class="col-md-6 mb-3">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" placeholder="Enter city">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="state" class="form-label">State/Province</label>
+                                <input type="text" class="form-control" id="state" placeholder="Enter state or province">
+                            </div>
+                            
+                            <!-- Zip Code -->
+                            <div class="col-md-6 mb-3">
+                                <label for="zipcode" class="form-label">Zip/Postal Code</label>
+                                <input type="text" class="form-control" id="zipcode" placeholder="Enter zip or postal code">
+                            </div>
+                            
+                            <!-- Coordinates -->
+                            <div class="col-md-3 mb-3">
+                                <label for="lat" class="form-label">Latitude</label>
+                                <input type="number" class="form-control" id="lat" placeholder="0.000000" step="any">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="long" class="form-label">Longitude</label>
+                                <input type="number" class="form-control" id="long" placeholder="0.000000" step="any">
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-2 mt-3">
+                            <button id="validateAddress" class="btn btn-outline-primary">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Validate Address
+                            </button>
+                            <button id="getCoordinates" class="btn btn-outline-secondary">
+                                <i class="fas fa-crosshairs"></i>
+                                Get Coordinates
+                            </button>
+                            <button id="clearAddress" class="btn btn-outline-danger">
+                                <i class="fas fa-times"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="settings-page" class="page">
                 <div class="page-header">
                     <h1>Settings</h1>
@@ -526,57 +660,5 @@
     <script src="js/charts.js"></script>
     <script src="js/table.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        // Edit Template functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            // Setup back button functionality
-            const backButton = document.getElementById('backToTable');
-            if (backButton) {
-                backButton.addEventListener('click', () => {
-                    // Navigate back to table page
-                    const tableNavItem = document.querySelector('[data-page="table"]');
-                    if (tableNavItem) {
-                        tableNavItem.click();
-                    }
-                });
-            }
-            
-            // Setup save button functionality
-            const saveButton = document.getElementById('saveTemplate');
-            const templateNameInput = document.getElementById('templateName');
-            
-            if (saveButton && templateNameInput) {
-                saveButton.addEventListener('click', () => {
-                    const templateName = templateNameInput.value.trim();
-                    
-                    if (!templateName) {
-                        if (window.DashboardUtils) {
-                            window.DashboardUtils.showNotification(
-                                'Please enter a template name before saving.',
-                                'warning'
-                            );
-                        }
-                        templateNameInput.focus();
-                        return;
-                    }
-                    
-                    // Save template notification
-                    if (window.DashboardUtils) {
-                        window.DashboardUtils.showNotification(
-                            `Template "${templateName}" saved successfully!`,
-                            'success'
-                        );
-                    }
-                });
-                
-                // Save on Enter key
-                templateNameInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        saveButton.click();
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>
