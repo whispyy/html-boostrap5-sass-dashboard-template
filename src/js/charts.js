@@ -377,7 +377,7 @@ class ChartManager {
 
 // Initialize charts when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new ChartManager();
+    window.chartManager = new ChartManager();
 });
 
 // Handle window resize for chart responsiveness
@@ -390,3 +390,6 @@ window.addEventListener('resize', () => {
         }
     }, 250);
 });
+
+// Export for module use
+export default ChartManager;

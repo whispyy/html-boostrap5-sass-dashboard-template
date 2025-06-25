@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // Variables
 $colors: (
   primary: #3b82f6,
@@ -55,7 +57,6 @@ $transitions: (
   normal: 0.3s
 );
 
-@use "sass:map";
 
 // Helper functions
 @function color($name) {

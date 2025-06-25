@@ -197,3 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Export for module use
+export default TableManager;

@@ -664,3 +664,6 @@ window.DashboardUtils = {
     formatDate: (date) => window.dashboardApp?.formatDate(date) || date,
     showNotification: (message, type, duration) => window.dashboardApp?.showNotification(message, type, duration)
 };
+
+// Export for module use
+export default DashboardApp;

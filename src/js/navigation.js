@@ -84,5 +84,8 @@ class Navigation {
 
 // Initialize navigation when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new Navigation();
+    window.navigation = new Navigation();
 });
+
+// Export for module use
+export default Navigation;
