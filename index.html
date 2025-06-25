@@ -44,6 +44,10 @@
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>
+            <a href="#" class="nav-item" data-page="edit-template">
+                <i class="fas fa-edit"></i>
+                <span>Edit Template</span>
+            </a>
             <a href="#" class="nav-item" data-page="settings">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
@@ -303,6 +307,205 @@
                 </div>
             </div>
 
+            <!-- Edit Template Page -->
+            <div id="edit-template-page" class="page">
+                <div class="page-header">
+                    <button id="backToTable" class="btn btn-outline mb-3">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </button>
+                    <h1>Edit Template</h1>
+                    <p>Configure and customize your template settings.</p>
+                </div>
+
+                <!-- Name Input Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row align-items-end">
+                            <div class="col-lg-9 col-md-8">
+                                <label for="templateName" class="form-label">Template Name</label>
+                                <input type="text" class="form-control" id="templateName" placeholder="Enter template name">
+                            </div>
+                            <div class="col-lg-3 col-md-4">
+                                <button id="saveTemplate" class="btn btn-primary w-100 mt-3 mt-md-0">
+                                    <i class="fas fa-save"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questionnaire Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">
+                            <i class="fas fa-clipboard-list me-2"></i>
+                            Questionnaire
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="questionnaireAccordion">
+                            <!-- Question 1 -->
+                            <div class="accordion" id="form_question_1">
+                                <div class="accordion-item">
+                                    <div class="accordion-header h4" id="form_question_1_header">
+                                        <button aria-controls="form_question_1_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_1_collapse" data-bs-toggle="collapse" type="button">
+                                            Décrivez brièvement ce qu'il s'est passé. - Form::Questions::Text
+                                        </button>
+                                    </div>
+                                    <div aria-labelledby="form_question_1_header" class="accordion-collapse collapse" id="form_question_1_collapse">
+                                        <div class="accordion-body">
+                                            <!-- No input fields, just display the question type -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 2 -->
+                            <div class="accordion" id="form_question_2">
+                                <div class="accordion-item">
+                                    <div class="accordion-header h4" id="form_question_2_header">
+                                        <button aria-controls="form_question_2_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_2_collapse" data-bs-toggle="collapse" type="button">
+                                            Quand (date de l'événement)? - Form::Questions::Date
+                                        </button>
+                                    </div>
+                                    <div aria-labelledby="form_question_2_header" class="accordion-collapse collapse" id="form_question_2_collapse">
+                                        <div class="accordion-body">
+                                            <!-- No input fields, just display the question type -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 3 -->
+                            <div class="accordion" id="form_question_3">
+                                <div class="accordion-item">
+                                    <div class="accordion-header h4" id="form_question_3_header">
+                                        <button aria-controls="form_question_3_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_3_collapse" data-bs-toggle="collapse" type="button">
+                                            Accident de travail? - Form::Questions::YesNo
+                                        </button>
+                                    </div>
+                                    <div aria-labelledby="form_question_3_header" class="accordion-collapse collapse" id="form_question_3_collapse">
+                                        <div class="accordion-body">
+                                            <!-- No input fields, just display the question type -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 4 with nested questions -->
+                            <div class="accordion" id="form_question_4">
+                                <div class="accordion-item">
+                                    <div class="accordion-header h4" id="form_question_4_header">
+                                        <button aria-controls="form_question_4_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_4_collapse" data-bs-toggle="collapse" type="button">
+                                            Chute? - Form::Questions::YesNo
+                                        </button>
+                                    </div>
+                                    <div aria-labelledby="form_question_4_header" class="accordion-collapse collapse" id="form_question_4_collapse">
+                                        <div class="accordion-body">
+                                            <!-- Nested questions for "Si oui" -->
+                                            <div class="ps-2">
+                                                <p><strong>Si oui:</strong></p>
+                                                <div class="ps-3">
+                                                    <!-- Sub-question 1 -->
+                                                    <div class="accordion" id="form_question_4_1">
+                                                        <div class="accordion-item">
+                                                            <div class="accordion-header h5" id="form_question_4_1_header">
+                                                                <button aria-controls="form_question_4_1_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_4_1_collapse" data-bs-toggle="collapse" type="button">
+                                                                    de quelle hauteur? - Form::Questions::Single
+                                                                </button>
+                                                            </div>
+                                                            <div aria-labelledby="form_question_4_1_header" class="accordion-collapse collapse" id="form_question_4_1_collapse">
+                                                                <div class="accordion-body">
+                                                                    <div class="ps-3">
+                                                                        <p>1. votre propre hauteur</p>
+                                                                        <p>2. plus de 3 marches dans un escalier ou monté sur un objet de plus de 1 mètre (3 pieds) de hauteur</p>
+                                                                        <p>3. moins de 3 marches dans un escalier ou monté sur un objet de moins de 1 mètre (3 pieds) de hauteur</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Sub-question 2 -->
+                                                    <div class="accordion" id="form_question_4_2">
+                                                        <div class="accordion-item">
+                                                            <div class="accordion-header h5" id="form_question_4_2_header">
+                                                                <button aria-controls="form_question_4_2_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_4_2_collapse" data-bs-toggle="collapse" type="button">
+                                                                    pourquoi êtes-vous tombé? - Form::Questions::Single
+                                                                </button>
+                                                            </div>
+                                                            <div aria-labelledby="form_question_4_2_header" class="accordion-collapse collapse" id="form_question_4_2_collapse">
+                                                                <div class="accordion-body">
+                                                                    <div class="ps-3">
+                                                                        <p>1. avez-vous eu une perte d'équilibre?</p>
+                                                                        <p>2. avez-vous trébuché (vous êtes-vous enfargé sur un objet)?</p>
+                                                                        <p>3. avez-vous perdu conscience avant de tomber?</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Sub-question 3 -->
+                                                    <div class="accordion" id="form_question_4_3">
+                                                        <div class="accordion-item">
+                                                            <div class="accordion-header h5" id="form_question_4_3_header">
+                                                                <button aria-controls="form_question_4_3_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_4_3_collapse" data-bs-toggle="collapse" type="button">
+                                                                    combien de chutes dans la dernière année? - Form::Questions::Number
+                                                                </button>
+                                                            </div>
+                                                            <div aria-labelledby="form_question_4_3_header" class="accordion-collapse collapse" id="form_question_4_3_collapse">
+                                                                <div class="accordion-body">
+                                                                    <!-- No input field, just display the question type -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 5 -->
+                            <div class="accordion" id="form_question_5">
+                                <div class="accordion-item">
+                                    <div class="accordion-header h4" id="form_question_5_header">
+                                        <button aria-controls="form_question_5_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_5_collapse" data-bs-toggle="collapse" type="button">
+                                            Quel est votre travail usuel? - Form::Questions::Text
+                                        </button>
+                                    </div>
+                                    <div aria-labelledby="form_question_5_header" class="accordion-collapse collapse" id="form_question_5_collapse">
+                                        <div class="accordion-body">
+                                            <!-- No input field, just display the question type -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 6 -->
+                            <div class="accordion" id="form_question_6">
+                                <div class="accordion-item">
+                                    <div class="accordion-header h4" id="form_question_6_header">
+                                        <button aria-controls="form_question_6_collapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#form_question_6_collapse" data-bs-toggle="collapse" type="button">
+                                            Quelles sont vos attentes quant à cette consultation? - Form::Questions::Text
+                                        </button>
+                                    </div>
+                                    <div aria-labelledby="form_question_6_header" class="accordion-collapse collapse" id="form_question_6_collapse">
+                                        <div class="accordion-body">
+                                            <!-- No input field, just display the question type -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="settings-page" class="page">
                 <div class="page-header">
                     <h1>Settings</h1>
@@ -323,5 +526,57 @@
     <script src="js/charts.js"></script>
     <script src="js/table.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        // Edit Template functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup back button functionality
+            const backButton = document.getElementById('backToTable');
+            if (backButton) {
+                backButton.addEventListener('click', () => {
+                    // Navigate back to table page
+                    const tableNavItem = document.querySelector('[data-page="table"]');
+                    if (tableNavItem) {
+                        tableNavItem.click();
+                    }
+                });
+            }
+            
+            // Setup save button functionality
+            const saveButton = document.getElementById('saveTemplate');
+            const templateNameInput = document.getElementById('templateName');
+            
+            if (saveButton && templateNameInput) {
+                saveButton.addEventListener('click', () => {
+                    const templateName = templateNameInput.value.trim();
+                    
+                    if (!templateName) {
+                        if (window.DashboardUtils) {
+                            window.DashboardUtils.showNotification(
+                                'Please enter a template name before saving.',
+                                'warning'
+                            );
+                        }
+                        templateNameInput.focus();
+                        return;
+                    }
+                    
+                    // Save template notification
+                    if (window.DashboardUtils) {
+                        window.DashboardUtils.showNotification(
+                            `Template "${templateName}" saved successfully!`,
+                            'success'
+                        );
+                    }
+                });
+                
+                // Save on Enter key
+                templateNameInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        saveButton.click();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
