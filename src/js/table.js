@@ -5,9 +5,12 @@ class TableManager {
         this.searchInput = document.getElementById('tableSearch');
         this.tableInfo = document.getElementById('tableInfo');
         this.sortHeaders = document.querySelectorAll('[data-sort]');
+        this.perPageSelect = document.getElementById('perPageSelect');
         
         this.currentSort = { field: 'name', direction: 'asc' };
         this.searchTerm = '';
+        this.perPage = 10;
+        this.currentPage = 1;
         
         this.sampleData = [
             { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active', lastLogin: '2024-01-15', revenue: 12500 },
@@ -25,6 +28,7 @@ class TableManager {
         // Search functionality
         this.searchInput?.addEventListener('input', (e) => {
             this.searchTerm = e.target.value.toLowerCase();
+            this.currentPage = 1; // Reset to first page on search
             this.renderTable();
         });
         
@@ -34,6 +38,13 @@ class TableManager {
                 const field = header.dataset.sort;
                 this.handleSort(field);
             });
+        });
+        
+        // Per page selector
+        this.perPageSelect?.addEventListener('change', (e) => {
+            this.perPage = parseInt(e.target.value);
+            this.currentPage = 1; // Reset to first page when changing per page
+            this.renderTable();
         });
         
         // Initial render
@@ -97,11 +108,18 @@ class TableManager {
         const filteredData = this.filterData();
         const sortedData = this.sortData(filteredData);
         
+        // Calculate pagination
+        const totalItems = sortedData.length;
+        const totalPages = Math.ceil(totalItems / this.perPage);
+        const startIndex = (this.currentPage - 1) * this.perPage;
+        const endIndex = Math.min(startIndex + this.perPage, totalItems);
+        const paginatedData = sortedData.slice(startIndex, endIndex);
+        
         if (!this.tableBody) return;
         
         this.tableBody.innerHTML = '';
         
-        sortedData.forEach(row => {
+        paginatedData.forEach(row => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
@@ -125,7 +143,9 @@ class TableManager {
         
         // Update table info
         if (this.tableInfo) {
-            this.tableInfo.textContent = `Showing ${sortedData.length} of ${this.sampleData.length} results`;
+            const showingStart = totalItems > 0 ? startIndex + 1 : 0;
+            const showingEnd = endIndex;
+            this.tableInfo.textContent = `${showingStart}-${showingEnd} of ${totalItems}`;
         }
     }
     

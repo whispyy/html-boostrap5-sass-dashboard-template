@@ -261,7 +261,15 @@
 
                     <div class="table-footer">
                         <div class="table-info">
-                            <span id="tableInfo">Showing 6 of 6 results</span>
+                            <select id="perPageSelect" class="per-page-select">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                            <span class="table-info-divider">|</span>
+                            <span id="tableInfo">1-6 of 6</span>
                         </div>
                         <div class="pagination">
                             <button class="btn btn-outline">Previous</button>

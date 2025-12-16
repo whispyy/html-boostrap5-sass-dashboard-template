@@ -687,8 +687,39 @@ body {
 }
 
 .table-info {
+  display: flex;
+  align-items: center;
+  gap: spacing(md);
   font-size: 0.875rem;
   color: color(secondary);
+}
+
+.table-info-divider {
+  color: color(secondary-lighter);
+  font-weight: 300;
+}
+
+.per-page-select {
+  padding: spacing(xs) spacing(sm);
+  padding-right: spacing(lg);
+  border: 1px solid color(secondary-lighter);
+  border-radius: radius(md);
+  background: color(white);
+  color: color(text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+  transition: all transition(fast);
+  min-width: 60px;
+
+  &:hover {
+    border-color: color(secondary);
+  }
+
+  &:focus {
+    border-color: color(primary);
+    box-shadow: shadow(focus);
+  }
 }
 
 .pagination {
@@ -760,6 +791,11 @@ body {
   .table-footer {
     flex-direction: column;
     text-align: center;
+    gap: spacing(md);
+  }
+  
+  .table-info {
+    justify-content: center;
   }
 }
 
