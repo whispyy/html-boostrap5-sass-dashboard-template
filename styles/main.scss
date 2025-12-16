@@ -570,6 +570,66 @@ body {
   overflow-x: auto;
 }
 
+// Bulk Actions Bar
+.bulk-actions-bar {
+  padding: spacing(lg) spacing(xl);
+  background: color(primary-lighter);
+  border-bottom: 1px solid color(primary-light);
+  animation: slideDown transition(normal) ease-out;
+}
+
+.bulk-actions-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: spacing(lg);
+}
+
+.selected-count {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: color(primary-dark);
+}
+
+.bulk-actions-buttons {
+  display: flex;
+  gap: spacing(sm);
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: spacing(xs) spacing(md);
+  font-size: 0.8125rem;
+}
+
+.btn-danger {
+  color: color(danger);
+  border-color: color(danger-light);
+
+  &:hover {
+    background: color(danger-light);
+    border-color: color(danger);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Checkbox Column
+.checkbox-column {
+  width: 50px;
+  text-align: center;
+}
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -586,6 +646,12 @@ body {
     cursor: pointer;
     user-select: none;
     position: relative;
+
+    &.checkbox-column {
+      cursor: default;
+      padding: spacing(md) spacing(xl);
+      text-align: center;
+    }
 
     &:hover {
       background: color(border-light);
@@ -605,11 +671,35 @@ body {
     padding: spacing(lg) spacing(xl);
     border-bottom: 1px solid color(border);
     white-space: nowrap;
+
+    &.checkbox-column {
+      padding: spacing(lg) spacing(xl);
+      text-align: center;
+    }
   }
 
-  tr:hover {
-    background: #f9fafb;
+  tr {
+    transition: background-color transition(fast);
+
+    &:hover {
+      background: #f9fafb;
+    }
+
+    &.selected {
+      background: color(primary-lighter);
+
+      &:hover {
+        background: color(primary-light);
+      }
+    }
   }
+}
+
+.table-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: color(primary);
 }
 
 .sort-icon {
@@ -796,6 +886,23 @@ body {
   
   .table-info {
     justify-content: center;
+  }
+  
+  .bulk-actions-bar {
+    padding: spacing(md);
+  }
+  
+  .bulk-actions-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .bulk-actions-buttons {
+    justify-content: center;
+  }
+  
+  .checkbox-column {
+    width: 40px;
   }
 }
 

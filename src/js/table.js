@@ -6,11 +6,15 @@ class TableManager {
         this.tableInfo = document.getElementById('tableInfo');
         this.sortHeaders = document.querySelectorAll('[data-sort]');
         this.perPageSelect = document.getElementById('perPageSelect');
+        this.selectAllCheckbox = document.getElementById('selectAll');
+        this.bulkActionsBar = document.getElementById('bulkActionsBar');
+        this.selectedCount = document.getElementById('selectedCount');
         
         this.currentSort = { field: 'name', direction: 'asc' };
         this.searchTerm = '';
         this.perPage = 10;
         this.currentPage = 1;
+        this.selectedRows = new Set();
         
         this.sampleData = [
             { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active', lastLogin: '2024-01-15', revenue: 12500 },
@@ -45,6 +49,28 @@ class TableManager {
             this.perPage = parseInt(e.target.value);
             this.currentPage = 1; // Reset to first page when changing per page
             this.renderTable();
+        });
+        
+        // Select all checkbox
+        this.selectAllCheckbox?.addEventListener('change', (e) => {
+            this.handleSelectAll(e.target.checked);
+        });
+        
+        // Bulk action buttons
+        document.getElementById('bulkExport')?.addEventListener('click', () => {
+            this.bulkExport();
+        });
+        
+        document.getElementById('bulkChangeStatus')?.addEventListener('click', () => {
+            this.bulkChangeStatus();
+        });
+        
+        document.getElementById('bulkDelete')?.addEventListener('click', () => {
+            this.bulkDelete();
+        });
+        
+        document.getElementById('clearSelection')?.addEventListener('click', () => {
+            this.clearSelection();
         });
         
         // Initial render
@@ -121,7 +147,16 @@ class TableManager {
         
         paginatedData.forEach(row => {
             const tr = document.createElement('tr');
+            const isSelected = this.selectedRows.has(row.id);
+            
+            if (isSelected) {
+                tr.classList.add('selected');
+            }
+            
             tr.innerHTML = `
+                <td class="checkbox-column">
+                    <input type="checkbox" class="table-checkbox row-checkbox" data-id="${row.id}" ${isSelected ? 'checked' : ''}>
+                </td>
                 <td>
                     <div class="user-cell">
                         <div class="user-cell-avatar">${row.name.charAt(0)}</div>
@@ -138,14 +173,155 @@ class TableManager {
                 <td>${row.lastLogin}</td>
                 <td>$${row.revenue.toLocaleString()}</td>
             `;
+            
+            // Add checkbox event listener
+            const checkbox = tr.querySelector('.row-checkbox');
+            checkbox.addEventListener('change', (e) => {
+                this.handleRowSelection(row.id, e.target.checked);
+            });
+            
             this.tableBody.appendChild(tr);
         });
+        
+        // Update select all checkbox state
+        this.updateSelectAllState();
+        
+        // Update bulk actions bar
+        this.updateBulkActionsBar();
         
         // Update table info
         if (this.tableInfo) {
             const showingStart = totalItems > 0 ? startIndex + 1 : 0;
             const showingEnd = endIndex;
             this.tableInfo.textContent = `${showingStart}-${showingEnd} of ${totalItems}`;
+        }
+    }
+    
+    handleRowSelection(id, isChecked) {
+        if (isChecked) {
+            this.selectedRows.add(id);
+        } else {
+            this.selectedRows.delete(id);
+        }
+        
+        // Update row styling
+        const row = this.tableBody.querySelector(`[data-id="${id}"]`)?.closest('tr');
+        if (row) {
+            row.classList.toggle('selected', isChecked);
+        }
+        
+        this.updateSelectAllState();
+        this.updateBulkActionsBar();
+    }
+    
+    handleSelectAll(isChecked) {
+        const filteredData = this.filterData();
+        const sortedData = this.sortData(filteredData);
+        const startIndex = (this.currentPage - 1) * this.perPage;
+        const endIndex = Math.min(startIndex + this.perPage, sortedData.length);
+        const paginatedData = sortedData.slice(startIndex, endIndex);
+        
+        paginatedData.forEach(row => {
+            if (isChecked) {
+                this.selectedRows.add(row.id);
+            } else {
+                this.selectedRows.delete(row.id);
+            }
+        });
+        
+        this.renderTable();
+    }
+    
+    updateSelectAllState() {
+        if (!this.selectAllCheckbox) return;
+        
+        const filteredData = this.filterData();
+        const sortedData = this.sortData(filteredData);
+        const startIndex = (this.currentPage - 1) * this.perPage;
+        const endIndex = Math.min(startIndex + this.perPage, sortedData.length);
+        const paginatedData = sortedData.slice(startIndex, endIndex);
+        
+        const allSelected = paginatedData.length > 0 && paginatedData.every(row => this.selectedRows.has(row.id));
+        const someSelected = paginatedData.some(row => this.selectedRows.has(row.id));
+        
+        this.selectAllCheckbox.checked = allSelected;
+        this.selectAllCheckbox.indeterminate = someSelected && !allSelected;
+    }
+    
+    updateBulkActionsBar() {
+        const count = this.selectedRows.size;
+        
+        if (count > 0) {
+            this.bulkActionsBar.style.display = 'block';
+            this.selectedCount.textContent = `${count} item${count > 1 ? 's' : ''} selected`;
+        } else {
+            this.bulkActionsBar.style.display = 'none';
+        }
+    }
+    
+    clearSelection() {
+        this.selectedRows.clear();
+        this.renderTable();
+    }
+    
+    bulkExport() {
+        const selectedData = this.sampleData.filter(row => this.selectedRows.has(row.id));
+        
+        if (selectedData.length === 0) return;
+        
+        // Convert to CSV format
+        const headers = ['Name', 'Email', 'Role', 'Status', 'Last Login', 'Revenue'];
+        const csvContent = [
+            headers.join(','),
+            ...selectedData.map(row => [
+                row.name,
+                row.email,
+                row.role,
+                row.status,
+                row.lastLogin,
+                row.revenue
+            ].join(','))
+        ].join('\n');
+        
+        // Create and download file
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `selected-data-${Date.now()}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+    
+    bulkChangeStatus() {
+        const selectedData = this.sampleData.filter(row => this.selectedRows.has(row.id));
+        
+        if (selectedData.length === 0) return;
+        
+        // Toggle status for all selected items
+        selectedData.forEach(row => {
+            const index = this.sampleData.findIndex(item => item.id === row.id);
+            if (index !== -1) {
+                this.sampleData[index].status = this.sampleData[index].status === 'Active' ? 'Inactive' : 'Active';
+            }
+        });
+        
+        this.renderTable();
+        alert(`Status changed for ${selectedData.length} item${selectedData.length > 1 ? 's' : ''}`);
+    }
+    
+    bulkDelete() {
+        const count = this.selectedRows.size;
+        
+        if (count === 0) return;
+        
+        if (confirm(`Are you sure you want to delete ${count} item${count > 1 ? 's' : ''}?`)) {
+            this.sampleData = this.sampleData.filter(row => !this.selectedRows.has(row.id));
+            this.selectedRows.clear();
+            this.renderTable();
+            alert(`${count} item${count > 1 ? 's' : ''} deleted successfully`);
         }
     }
     

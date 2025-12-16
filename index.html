@@ -223,10 +223,38 @@
                         </div>
                     </div>
 
+                    <!-- Bulk Actions Bar (hidden by default) -->
+                    <div id="bulkActionsBar" class="bulk-actions-bar" style="display: none;">
+                        <div class="bulk-actions-content">
+                            <span id="selectedCount" class="selected-count">0 items selected</span>
+                            <div class="bulk-actions-buttons">
+                                <button id="bulkExport" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-download"></i>
+                                    Export
+                                </button>
+                                <button id="bulkChangeStatus" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-toggle-on"></i>
+                                    Change Status
+                                </button>
+                                <button id="bulkDelete" class="btn btn-outline btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                    Delete
+                                </button>
+                                <button id="clearSelection" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-times"></i>
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="table-wrapper">
                         <table id="dataTable" class="data-table">
                             <thead>
                                 <tr>
+                                    <th class="checkbox-column">
+                                        <input type="checkbox" id="selectAll" class="table-checkbox">
+                                    </th>
                                     <th data-sort="name">
                                         Name
                                         <i class="fas fa-sort sort-icon"></i>
