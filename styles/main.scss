@@ -511,7 +511,7 @@ body {
   background: color(white);
   border-radius: radius(lg);
   border: 1px solid color(border);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .table-header {
@@ -522,6 +522,7 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: spacing(lg);
+  position: relative;
 }
 
 .table-search {
@@ -531,6 +532,161 @@ body {
 .table-actions {
   display: flex;
   gap: spacing(md);
+  align-items: flex-start;
+}
+
+// Filter Wrapper & Panel
+.filter-wrapper {
+  position: relative;
+}
+
+.filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 spacing(xs);
+  margin-left: spacing(xs);
+  background: color(primary);
+  color: color(white);
+  border-radius: radius(pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.filter-panel {
+  position: absolute;
+  top: calc(100% + spacing(sm));
+  right: 0;
+  width: 320px;
+  background: color(white);
+  border: 1px solid color(border);
+  border-radius: radius(lg);
+  box-shadow: shadow(md);
+  z-index: 100;
+  animation: slideDown transition(normal) ease-out;
+}
+
+.filter-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: spacing(md) spacing(lg);
+  border-bottom: 1px solid color(border);
+
+  h4 {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: color(text-primary);
+  }
+}
+
+.btn-close-filter {
+  background: none;
+  border: none;
+  padding: spacing(xs);
+  border-radius: radius(sm);
+  color: color(secondary);
+  cursor: pointer;
+  transition: background-color transition(fast);
+
+  &:hover {
+    background-color: color(border-light);
+  }
+}
+
+.filter-panel-body {
+  padding: spacing(lg);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.filter-group {
+  margin-bottom: spacing(lg);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.filter-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: color(text-primary);
+  margin-bottom: spacing(sm);
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(sm);
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: spacing(sm);
+  cursor: pointer;
+  padding: spacing(xs);
+  border-radius: radius(sm);
+  transition: background-color transition(fast);
+
+  &:hover {
+    background-color: color(border-light);
+  }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: color(primary);
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: color(text-muted);
+  }
+}
+
+.filter-range {
+  display: flex;
+  align-items: center;
+  gap: spacing(sm);
+
+  span {
+    font-size: 0.875rem;
+    color: color(secondary);
+  }
+}
+
+.filter-input {
+  width: 100px;
+  padding: spacing(sm);
+  border: 1px solid color(secondary-lighter);
+  border-radius: radius(md);
+  font-size: 0.875rem;
+  outline: none;
+
+  &:focus {
+    border-color: color(primary);
+    box-shadow: shadow(focus);
+  }
+
+  &::placeholder {
+    color: color(secondary-light);
+  }
+}
+
+.filter-panel-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: spacing(sm);
+  padding: spacing(lg);
+  border-top: 1px solid color(border);
+  background: #f9fafb;
 }
 
 .btn {

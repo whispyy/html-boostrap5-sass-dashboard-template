@@ -212,10 +212,75 @@
                         </div>
                         
                         <div class="table-actions">
-                            <button class="btn btn-outline">
-                                <i class="fas fa-filter"></i>
-                                Filter
-                            </button>
+                            <div class="filter-wrapper">
+                                <button id="filterBtn" class="btn btn-outline">
+                                    <i class="fas fa-filter"></i>
+                                    Filter
+                                    <span id="filterCount" class="filter-count" style="display: none;"></span>
+                                </button>
+                                
+                                <!-- Filter Dropdown Panel -->
+                                <div id="filterPanel" class="filter-panel" style="display: none;">
+                                    <div class="filter-panel-header">
+                                        <h4>Filter Options</h4>
+                                        <button id="closeFilterPanel" class="btn-close-filter">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="filter-panel-body">
+                                        <!-- Role Filter -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Role</label>
+                                            <div class="filter-options">
+                                                <label class="filter-checkbox">
+                                                    <input type="checkbox" value="Admin" class="role-filter">
+                                                    <span>Admin</span>
+                                                </label>
+                                                <label class="filter-checkbox">
+                                                    <input type="checkbox" value="Manager" class="role-filter">
+                                                    <span>Manager</span>
+                                                </label>
+                                                <label class="filter-checkbox">
+                                                    <input type="checkbox" value="User" class="role-filter">
+                                                    <span>User</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Status Filter -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Status</label>
+                                            <div class="filter-options">
+                                                <label class="filter-checkbox">
+                                                    <input type="checkbox" value="Active" class="status-filter">
+                                                    <span>Active</span>
+                                                </label>
+                                                <label class="filter-checkbox">
+                                                    <input type="checkbox" value="Inactive" class="status-filter">
+                                                    <span>Inactive</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Revenue Filter -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Revenue Range</label>
+                                            <div class="filter-range">
+                                                <input type="number" id="minRevenue" placeholder="Min" class="filter-input">
+                                                <span>to</span>
+                                                <input type="number" id="maxRevenue" placeholder="Max" class="filter-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="filter-panel-footer">
+                                        <button id="clearFilters" class="btn btn-outline btn-sm">Clear All</button>
+                                        <button id="applyFilters" class="btn btn-primary btn-sm">Apply Filters</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <button class="btn btn-primary">
                                 <i class="fas fa-download"></i>
                                 Export
